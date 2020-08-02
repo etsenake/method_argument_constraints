@@ -1,10 +1,10 @@
-module RequiredMethodArguments
+module MethodArgumentConstraints
   class RequirementsFailed < StandardError; end
   class WrongDataTypeError < StandardError; end
   class NoBindingError < StandardError; end
 
-  def required!(caller_binding, params)
-    raise NoBindingError.new("No binding passed for method using required!") unless caller_binding.is_a? Binding
+  def method_constraints!(caller_binding, params)
+    raise NoBindingError.new("No binding passed for method using method_constraints!") unless caller_binding.is_a? Binding
     caller_method = caller_locations(1,1).first.label
     arguments = _method_attributes(caller_binding, caller_method, params)
     evaluations = []
@@ -80,4 +80,4 @@ module RequiredMethodArguments
   end
 end
 
-Object.include RequiredMethodArguments
+Object.include MethodArgumentConstraints

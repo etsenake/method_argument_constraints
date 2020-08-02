@@ -1,15 +1,16 @@
-# RequiredMethodArguments
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/required_method_arguments`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
+# Method argument constraints
+Gem for setting constraints on method arguments. Very similar to [contracts](https://github.com/egonSchiele/contracts.ruby) but a bit simpler. 
+ - It doesn't blow up your stacktrace with calls to contract
+ - It leverages classes already existing in your project when validating when doing direct comparison (more to come on this later)
+ - It allows you to define customized requirements easily when what you want to do is a bit atypical ie pass a proc or define a method in yuor class and pass the name as a symbol
+ 
+ It also doesn't blow up your stack trace with a gem method calls before and after every method, this may be fine for most people but in some of my use cases, it made debugging harder than it should be.
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'required_method_arguments'
+gem 'method_argument_constraints'
 ```
 
 And then execute:
@@ -18,11 +19,47 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install required_method_arguments
+    $ gem install method_argument_constraints
 
 ## Usage
+To set requirements based on an already existing class you'd do it like so: 
+```ruby
+class A
+  def hi(friend)
+  method_constraints!(binding, friend: String)
+    puts "hi #{friend}"
+  end
+end
+```
 
-TODO: Write usage instructions here
+If the kind of constraint isn't as straightforward as just a `is_a?` comparison you could do it one of two other ways 
+```ruby
+class A
+  def hi(number)
+  my_proc = Proc.new{|arg_value, _arg_name| arg_value.is_a? Integer && arg_value > 1 }
+  method_constraints!(binding, friend: my_proc)
+    puts "number: #{number}"
+  end
+end
+```
+or
+
+```ruby
+class A
+  def my_validation_method(arg_value, _arg_name)
+    arg_value.is_a? Integer && arg_value > 1
+  end
+
+  def hi(number)
+  method_constraints!(binding, friend: :my_validation_method)
+    puts "number: #{number}"
+  end
+end
+```
+
+Note that: When using a Proc or method the return value must always be a boolean value
+
+Why do we need to pass the current binding? This allows the gem to access the arguments, and parameters the method we want to validate was called with.
 
 ## Development
 
@@ -32,7 +69,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/required_method_arguments. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/required_method_arguments/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/method_argument_constraints. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/method_argument_constraints/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
@@ -41,4 +78,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the RequiredMethodArguments project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/required_method_arguments/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the RequiredMethodArguments project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/method_argument_constraints/blob/master/CODE_OF_CONDUCT.md).

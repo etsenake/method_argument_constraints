@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "required_method_arguments"
+require "method_argument_constraints"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
