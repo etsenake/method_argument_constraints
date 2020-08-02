@@ -23,4 +23,7 @@ Gem::Specification.new do |spec|
   spec.files         = ["lib/method_argument_constraints.rb"]
   spec.require_paths = ["lib"]
   spec.license       = 'MIT'
+  spec.homepage      = 'https://github.com/etsenake/method_argument_constraints'
+
+
 end
