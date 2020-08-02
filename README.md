@@ -1,11 +1,9 @@
 # Method argument constraints
-Gem for setting constraints on method arguments. Very similar to [contracts](https://github.com/egonSchiele/contracts.ruby) but a bit simpler. 
- - It doesn't blow up your stacktrace with calls to contract
+Gem for setting constraints on method arguments. Very similar to [contracts](https://github.com/egonSchiele/contracts.ruby) but a bit simpler. It also does not validate the return of method.
  - It leverages classes already existing in your project when validating when doing direct comparison (more to come on this later)
- - It allows you to define customized requirements easily when what you want to do is a bit atypical ie pass a proc or define a method in yuor class and pass the name as a symbol
+ - It allows you to define customized constraints easily when what you want to do is a bit atypical ie pass a proc or define a method in your class and pass the name as a symbol
  
- It also doesn't blow up your stack trace with a gem method calls before and after every method, this may be fine for most people but in some of my use cases, it made debugging harder than it should be.
-## Installation
+ ## Installation
 
 Add this line to your application's Gemfile:
 
