@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    method_argument_constraints (0.1.0)
+    method_argument_constraints (0.1.2)
 
 GEM
   remote: https://rubygems.org/

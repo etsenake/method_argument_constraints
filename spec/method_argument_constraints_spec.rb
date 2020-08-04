@@ -1,8 +1,4 @@
 RSpec.describe MethodArgumentConstraints do
-  it "has a version number" do
-    expect(MethodArgumentConstraints::VERSION).not_to be nil
-  end
-
   describe "#method_constraints!" do
     it "throws an error when binding is not passed" do
       expect { method_constraints!(nil, argument: Integer) }.to raise_error NoBindingError
